@@ -37,7 +37,7 @@
                             </goals>
                             <configuration>
                                 <tasks>
-                                    <copy todir="${imagej.app.directory}/plugins/" file="target/${project.build.finalName}.jar"/>
+                                    <copy todir="${imagej.app.directory}/plugins/jars" file="target/${project.build.finalName}.jar"/>
                                 </tasks>
                             </configuration>
                         </execution>
