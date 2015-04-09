@@ -42,7 +42,7 @@ public class RandomImage extends PlugInFrame implements ActionListener,
         pack();
         GUI.center(this);
         setMinimumSize(new Dimension(400, 50));
-        show();
+        setVisible(true);
     }
 
     @Override
@@ -51,13 +51,15 @@ public class RandomImage extends PlugInFrame implements ActionListener,
         int width = Integer.parseInt(txt_width.getText());
         int height = Integer.parseInt(txt_height.getText());
 
-        ImagePlus imagePlus = NewImage.createByteImage("Signal", height, width,
+        ImagePlus imagePlus = NewImage.createByteImage("Signal", width, height,
                 1, NewImage.FILL_WHITE);
         ByteProcessor iproc = (ByteProcessor) imagePlus.getProcessor();
 
-        for (int i = 0; i < height; i++)
-            for (int j = 0; j < width; j++)
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height ; j++) {
                 iproc.set(i, j, (int) Math.floor(Math.random() * 255));
+            }
+        }
 
         imagePlus.show();
 
@@ -65,37 +67,23 @@ public class RandomImage extends PlugInFrame implements ActionListener,
 
     @Override
     public void textValueChanged(TextEvent arg0) {
-        TextField src = (TextField) arg0.getSource();
 
-        if (src.equals(txt_width)) {
-            if (isValid(src) && isValid(txt_height))
-                btn.setEnabled(true);
-            else
-                btn.setEnabled(false);
+        if (isValid(txt_width) && isValid(txt_height)) {
+            btn.setEnabled(true);
         } else {
-            if (isValid(src) && isValid(txt_width))
-                btn.setEnabled(true);
-            else
-                btn.setEnabled(false);
+            btn.setEnabled(false);
         }
     }
 
     private boolean isValid(TextField src) {
-        boolean valid = true;
         String txt = src.getText();
-        int value = 0;
+        int value;
         try {
             value = Integer.parseInt(txt);
         } catch (NumberFormatException e) {
             return false;
         }
 
-        if (value > 0 && value <= 512)
-            valid = true;
-        else
-            valid = false;
-
-        return valid;
-
+        return value > 0 && value <= 512;
     }
 }
