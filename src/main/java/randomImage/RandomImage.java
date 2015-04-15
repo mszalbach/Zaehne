@@ -56,7 +56,7 @@ public class RandomImage extends PlugInFrame implements ActionListener,
         ByteProcessor iproc = (ByteProcessor) imagePlus.getProcessor();
 
         for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height ; j++) {
+            for (int j = 0; j < height; j++) {
                 iproc.set(i, j, (int) Math.floor(Math.random() * 255));
             }
         }
