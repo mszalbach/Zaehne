@@ -1,2 +1,2 @@
 # Zaehne
-Skeleton for a ImageJ Plugin
+Skeleton for a ImageJ Plugin.
