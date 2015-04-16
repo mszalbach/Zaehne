@@ -7,7 +7,6 @@ import ij.plugin.filter.PlugInFilter;
 import ij.process.AutoThresholder;
 import ij.process.ImageProcessor;
 
-import java.awt.image.ColorModel;
 import java.awt.image.IndexColorModel;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +27,10 @@ public class Zaehne implements PlugInFilter {
 
     @Override
     public void run(ImageProcessor imageProcessor) {
-        String title = originalImage.getTitle();
 
         int dim = originalImage.getWidth() * originalImage.getHeight();
         //(range -180 => +180
+        //TODO convert hue to 0-255 and create image
         byte[] hue = new byte[dim];
         byte[] saturation = new byte[dim];
         byte[] brightness = new byte[dim];
