@@ -17,7 +17,7 @@ public class HueConverter extends AbstractHSBConverter {
 
         float[] hueFloat = new float[image.getWidth() * image.getHeight()];
         for (int i = 0; i < hue.length; i++) {
-            hueFloat[i] = (float) RangeUtils.convertValueToNewRange(hue[i], new Range(-180, 180), new Range(0, 360));
+            hueFloat[i] = (float) RangeUtils.convertValueToNewRange(hue[i], new Range(-128, 127), new Range(0, 254));
         }
 
         return createImage(image, hueFloat, null, null);
