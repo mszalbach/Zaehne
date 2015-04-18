@@ -1,10 +1,11 @@
-package de.fh.aachen.zaehne;
+package de.fh.aachen.zaehne.utils;
 
+import de.fh.aachen.zaehne.utils.Range;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import static de.fh.aachen.zaehne.RangeUtils.*;
+import static de.fh.aachen.zaehne.utils.RangeUtils.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
@@ -14,12 +15,12 @@ import static org.junit.Assert.*;
 @RunWith(Parameterized.class)
 public class RangeUtilsTest {
 
-    private final int value;
+    private final double value;
     private final Range oldRange;
     private final Range newRange;
-    private int solution;
+    private double solution;
 
-    public RangeUtilsTest(int value, Range oldRange, Range newRange, int solution) {
+    public RangeUtilsTest(double value, Range oldRange, Range newRange, double solution) {
 
         this.value = value;
         this.oldRange = oldRange;
@@ -33,9 +34,7 @@ public class RangeUtilsTest {
                 {0, new Range(0, 2), new Range(0, 1), 0},
                 {2, new Range(0, 2), new Range(0, 1), 1},
                 {5, new Range(0, 10), new Range(0, 20), 10},
-                {5, new Range(1, 10), new Range(1, 20), 9},
                 {0, new Range(-5, 5), new Range(0, 20), 10},
-                {100, new Range(-180, 180), new Range(0, 255), 198},
         };
     }
 
