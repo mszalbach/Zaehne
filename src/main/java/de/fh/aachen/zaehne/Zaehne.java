@@ -1,9 +1,6 @@
 package de.fh.aachen.zaehne;
 
-import de.fh.aachen.zaehne.imagej.utils.AwtHSBImage;
-import de.fh.aachen.zaehne.imagej.utils.HSBImageInterface;
-import de.fh.aachen.zaehne.imagej.utils.ImageJHSBImage;
-import de.fh.aachen.zaehne.imagej.utils.IntHSBImage;
+import de.fh.aachen.zaehne.imagej.utils.*;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
@@ -30,12 +27,12 @@ public class Zaehne implements PlugInFilter {
     @Override
     public void run(ImageProcessor imageProcessor) {
 
-        List<HSBImageInterface> images = new ArrayList<HSBImageInterface>();
-        images.add(new ImageJHSBImage(originalImage));
-        images.add(new AwtHSBImage(originalImage));
-        images.add(new IntHSBImage(originalImage));
+        List<HSBImage> images = new ArrayList<HSBImage>();
+        images.add(new HSBImage("ImageJ HSB", originalImage, new ImageJStrategy()));
+        images.add(new HSBImage("AWT HSB", originalImage, new FloatHSB()));
+        images.add(new HSBImage("INT HSB", originalImage, new IntHSB()));
 
-        for (HSBImageInterface image : images) {
+        for (HSBImage image : images) {
             ImagePlus hueImage = image.getHSBStack();
             hueImage.show();
             // hueImage.getProcessor().setAutoThreshold(AutoThresholder.Method.Moments, true);

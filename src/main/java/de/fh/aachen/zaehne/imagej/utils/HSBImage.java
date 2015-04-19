@@ -6,31 +6,40 @@ import ij.ImageStack;
 /**
  * Created by Marcel on 19.04.2015.
  */
-public abstract class HSBImage implements HSBImageInterface {
+public class HSBImage {
 
+    private static final String HUE = "Hue";
+    private static final String SATURATION = "Saturation";
+    private static final String BRIGHTNESS = "Brightness";
     protected final ImagePlus original;
+    protected String title;
+    protected Object hue;
+    protected Object saturation;
+    protected Object brightness;
 
-    public HSBImage(ImagePlus image) {
+    public HSBImage(String title, ImagePlus image, HSBStrategy strategy) {
+        this.title = title;
         this.original = image;
+        Object[] hsb = strategy.execute(image);
+        hue = hsb[0];
+        saturation = hsb[1];
+        brightness = hsb[2];
     }
 
-    @Override
     public int getWidth() {
         return original.getWidth();
     }
 
-    @Override
     public int getHeight() {
         return original.getHeight();
     }
 
-    @Override
     public String getTitle() {
         return original.getTitle();
     }
 
 
-    protected ImagePlus getHSBStack(String title, Object hue, Object saturation, Object brightness) {
+    public ImagePlus getHSBStack() {
         ImageStack hsbStack = new ImageStack(getWidth(), getHeight(), null);
         hsbStack.addSlice(HUE, hue);
         hsbStack.addSlice(SATURATION, saturation);
@@ -38,15 +47,15 @@ public abstract class HSBImage implements HSBImageInterface {
         return new ImagePlus(title, hsbStack);
     }
 
-    protected ImagePlus getHueImage(Object hue) {
+    public ImagePlus getHueImage() {
         return new ImagePlus(HUE, getImageStack(HUE, hue));
     }
 
-    protected ImagePlus getSaturationImage(Object saturation) {
+    public ImagePlus getSaturationImage() {
         return new ImagePlus(SATURATION, getImageStack(SATURATION, saturation));
     }
 
-    protected ImagePlus getBrightnessImage(Object brightness) {
+    public ImagePlus getBrightnessImage() {
         return new ImagePlus(BRIGHTNESS, getImageStack(BRIGHTNESS, brightness));
     }
 
