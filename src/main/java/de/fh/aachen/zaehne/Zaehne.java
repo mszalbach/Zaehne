@@ -1,16 +1,15 @@
 package de.fh.aachen.zaehne;
 
-import de.fh.aachen.zaehne.imagej.converter.HueConverter;
-import de.fh.aachen.zaehne.imagej.utils.HSBImage;
+import de.fh.aachen.zaehne.imagej.utils.AwtHSBImage;
+import de.fh.aachen.zaehne.imagej.utils.HSBImageInterface;
+import de.fh.aachen.zaehne.imagej.utils.ImageJHSBImage;
+import de.fh.aachen.zaehne.imagej.utils.IntHSBImage;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
 import ij.plugin.filter.PlugInFilter;
-import ij.process.AutoThresholder;
-import ij.process.ImageConverter;
 import ij.process.ImageProcessor;
 
-import java.awt.image.IndexColorModel;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,18 +30,17 @@ public class Zaehne implements PlugInFilter {
     @Override
     public void run(ImageProcessor imageProcessor) {
 
-        HSBImage hsbImage = new HSBImage(originalImage);
+        List<HSBImageInterface> images = new ArrayList<HSBImageInterface>();
+        images.add(new ImageJHSBImage(originalImage));
+        images.add(new AwtHSBImage(originalImage));
+        images.add(new IntHSBImage(originalImage));
 
-        ImagePlus hueImage = hsbImage.getHueImage();
-       // hueImage.getProcessor().setAutoThreshold(AutoThresholder.Method.Moments, true);
-        //hueImage.getProcessor().autoThreshold();
-
-        hueImage.show();
-
-        ImagePlus hueImageC = new HueConverter().convert(hsbImage);
-        new ImageConverter(hueImageC).convertToGray8();
-        hueImageC.show();
-
+        for (HSBImageInterface image : images) {
+            ImagePlus hueImage = image.getHSBStack();
+            hueImage.show();
+            // hueImage.getProcessor().setAutoThreshold(AutoThresholder.Method.Moments, true);
+            //hueImage.getProcessor().autoThreshold();
+        }
         IJ.showMessage("Done");
 
     }

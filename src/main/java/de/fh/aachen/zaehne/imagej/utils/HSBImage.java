@@ -4,66 +4,58 @@ import ij.ImagePlus;
 import ij.ImageStack;
 
 /**
- * Created by Marcel on 18.04.2015.
+ * Created by Marcel on 19.04.2015.
  */
-public class HSBImage {
+public abstract class HSBImage implements HSBImageInterface {
 
-
-
-
-    private String title;
-    private int width;
-    private int height;
-    private byte[] hue;
-    private byte[] saturation;
-    private byte[] brightness;
-
+    protected final ImagePlus original;
 
     public HSBImage(ImagePlus image) {
-        this.title = image.getTitle();
-        width = image.getWidth();
-        height = image.getHeight();
-        int dim = width * height;
-        hue = new byte[dim];
-        saturation = new byte[dim];
-        brightness = new byte[dim];
-        //(range -180 => +180
-        image.getProcessor().convertToColorProcessor().getHSB(hue, saturation, brightness);
+        this.original = image;
     }
 
-
-    public ImagePlus getHueImage() {
-        return new ImagePlus("Hue", getImageStack("Hue", hue));
-    }
-
-    public ImagePlus getSaturationImage() {
-        return new ImagePlus("Saturation", getImageStack("Saturation", saturation));
-    }
-
-    public ImagePlus getBrightnessImage() {
-        return new ImagePlus("Brightness", getImageStack("Brightness", brightness));
-    }
-
-
-    public String getTitle() {
-        return title;
-    }
-
+    @Override
     public int getWidth() {
-        return width;
+        return original.getWidth();
     }
 
+    @Override
     public int getHeight() {
-        return height;
+        return original.getHeight();
     }
 
-    public byte[] getHue() {
-        return hue.clone();
+    @Override
+    public String getTitle() {
+        return original.getTitle();
     }
 
-    private ImageStack getImageStack(String name, byte[] hbs) {
-        ImageStack hueStack = new ImageStack(width, height, null);
+
+    protected ImagePlus getHSBStack(String title, Object hue, Object saturation, Object brightness) {
+        ImageStack hsbStack = new ImageStack(getWidth(), getHeight(), null);
+        hsbStack.addSlice(HUE, hue);
+        hsbStack.addSlice(SATURATION, saturation);
+        hsbStack.addSlice(BRIGHTNESS, brightness);
+        return new ImagePlus(title, hsbStack);
+    }
+
+    protected ImagePlus getHueImage(Object hue) {
+        return new ImagePlus(HUE, getImageStack(HUE, hue));
+    }
+
+    protected ImagePlus getSaturationImage(Object saturation) {
+        return new ImagePlus(SATURATION, getImageStack(SATURATION, saturation));
+    }
+
+    protected ImagePlus getBrightnessImage(Object brightness) {
+        return new ImagePlus(BRIGHTNESS, getImageStack(BRIGHTNESS, brightness));
+    }
+
+
+    private ImageStack getImageStack(String name, Object hbs) {
+        ImageStack hueStack = new ImageStack(getWidth(), getHeight(), null);
         hueStack.addSlice(name, hbs);
         return hueStack;
     }
+
+
 }
