@@ -1,11 +1,10 @@
-package de.fh.aachen.zaehne.utils;
+package de.fh.aachen.dental.utils;
 
-import de.fh.aachen.zaehne.utils.Range;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import static de.fh.aachen.zaehne.utils.RangeUtils.*;
+import static de.fh.aachen.dental.utils.RangeUtils.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 

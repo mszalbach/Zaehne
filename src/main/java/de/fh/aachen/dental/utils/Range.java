@@ -1,4 +1,4 @@
-package de.fh.aachen.zaehne.utils;
+package de.fh.aachen.dental.utils;
 
 /**
  * Created by Marcel on 18.04.2015.

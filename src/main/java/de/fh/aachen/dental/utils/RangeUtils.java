@@ -1,4 +1,4 @@
-package de.fh.aachen.zaehne.utils;
+package de.fh.aachen.dental.utils;
 
 /**
  * Created by foobar on 16.04.15.

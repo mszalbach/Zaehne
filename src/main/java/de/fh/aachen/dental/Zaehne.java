@@ -1,6 +1,9 @@
-package de.fh.aachen.zaehne;
+package de.fh.aachen.dental;
 
-import de.fh.aachen.zaehne.imagej.utils.*;
+import de.fh.aachen.dental.imagej.HSBImage;
+import de.fh.aachen.dental.imagej.hsbStrategy.FloatStrategy;
+import de.fh.aachen.dental.imagej.hsbStrategy.ImageJStrategy;
+import de.fh.aachen.dental.imagej.hsbStrategy.IntegerStrategy;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
@@ -29,8 +32,8 @@ public class Zaehne implements PlugInFilter {
 
         List<HSBImage> images = new ArrayList<HSBImage>();
         images.add(new HSBImage("ImageJ HSB", originalImage, new ImageJStrategy()));
-        images.add(new HSBImage("AWT HSB", originalImage, new FloatHSB()));
-        images.add(new HSBImage("INT HSB", originalImage, new IntHSB()));
+        images.add(new HSBImage("AWT HSB", originalImage, new FloatStrategy()));
+        images.add(new HSBImage("INT HSB", originalImage, new IntegerStrategy()));
 
         for (HSBImage image : images) {
             ImagePlus hueImage = image.getHSBStack();

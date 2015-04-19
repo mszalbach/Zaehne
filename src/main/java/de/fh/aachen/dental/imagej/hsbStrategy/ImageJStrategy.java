@@ -1,7 +1,6 @@
-package de.fh.aachen.zaehne.imagej.utils;
+package de.fh.aachen.dental.imagej.hsbStrategy;
 
 import ij.ImagePlus;
-import ij.ImageStack;
 
 /**
  * Created by Marcel on 18.04.2015.
