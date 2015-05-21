@@ -8,12 +8,6 @@
     <artifactId>zaehne</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <description>TBA
-    </description>
-
-    <properties>
-        <imagej.app.directory>C:\Program Files (x86)\ImageJ</imagej.app.directory>
-    </properties>
 
     <ciManagement>
         <system>travis</system>
@@ -55,9 +49,27 @@
                         </goals>
                         <configuration>
                             <tasks>
-                                <copy todir="${imagej.app.directory}/plugins/jars"
+                                <copy todir="${imagej.app.directory}/plugins/"
                                       file="target/${project.build.finalName}.jar"/>
                             </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>1.0-alpha-2</version>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>read-project-properties</goal>
+                        </goals>
+                        <configuration>
+                            <files>
+                                <file>maven.properties</file>
+                            </files>
                         </configuration>
                     </execution>
                 </executions>
