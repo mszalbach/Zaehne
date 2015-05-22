@@ -10,7 +10,7 @@ public class ImageDuplicator implements Converter {
 
     @Override
     public ImagePlus convert(ImagePlus image) {
-        Duplicator duplicator = new Duplicator();
-        return duplicator.run(image);
+        ImagePlus duplicate =image.duplicate();
+        return duplicate;
     }
 }

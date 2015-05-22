@@ -2,8 +2,8 @@ package de.fh.aachen.dental;
 
 import de.fh.aachen.dental.imagej.converter.Converter;
 import de.fh.aachen.dental.imagej.converter.ImageDuplicator;
-import de.fh.aachen.dental.imagej.converter.ImageTo8Bit;
 import de.fh.aachen.dental.imagej.converter.ImageResize;
+import de.fh.aachen.dental.imagej.converter.ImageTo8Bit;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.gui.GUI;
@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,14 +27,14 @@ public class Zaehne extends PlugInFrame {
 
     private LinkedList<Converter> activeConverters = new LinkedList<Converter>();
 
-    private Map<String,Converter> converterMap = new LinkedHashMap<String, Converter>();
-    private Map<String,JCheckBox> checkBoxMap = new LinkedHashMap<String, JCheckBox>();
+    private Map<String, Converter> converterMap = new LinkedHashMap<String, Converter>();
+    private List<JCheckBox> checkBoxList = new LinkedList<JCheckBox>();
 
     public Zaehne() {
         super("Dental detection");
 
-        converterMap.put("ImageDuplicator", new ImageDuplicator());
-        converterMap.put("ImageResize", new ImageResize(1000, 1000, 2));
+        converterMap.put("Image Duplicator", new ImageDuplicator());
+        converterMap.put("Image Resize", new ImageResize(1000, 1000, 2));
         converterMap.put("8-bit", new ImageTo8Bit());
         init();
     }
@@ -45,7 +46,8 @@ public class Zaehne extends PlugInFrame {
 
         for (String converterName : converterMap.keySet()) {
             JCheckBox checkBox = new JCheckBox(converterName);
-            checkBoxMap.put(converterName, checkBox);
+            checkBox.setName(converterName);
+            checkBoxList.add(checkBox);
             add(checkBox);
         }
 
@@ -72,9 +74,10 @@ public class Zaehne extends PlugInFrame {
     }
 
     private void addConverter() {
-        for(Map.Entry<String,JCheckBox> checkBoxEntry : checkBoxMap.entrySet()) {
-            if(checkBoxEntry.getValue().isSelected()) {
-                activeConverters.add(converterMap.get(checkBoxEntry.getKey()));
+        activeConverters.clear();
+        for (JCheckBox checkBox : checkBoxList) {
+            if (checkBox.isSelected()) {
+                activeConverters.add(converterMap.get(checkBox.getName()));
             }
 
         }
@@ -82,8 +85,8 @@ public class Zaehne extends PlugInFrame {
 
     private void convert() {
         originalImage = IJ.getImage();
-        for(Converter converter : activeConverters) {
-            originalImage=converter.convert(originalImage);
+        for (Converter converter : activeConverters) {
+            originalImage = converter.convert(originalImage);
         }
         originalImage.show();
     }

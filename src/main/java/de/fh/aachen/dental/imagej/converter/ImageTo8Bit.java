@@ -15,6 +15,7 @@ public class ImageTo8Bit implements Converter {
 
         ImageConverter imageConverter = new ImageConverter(image);
         imageConverter.convertToGray8();
+        image.setTitle(image.getTitle() + " 8Bit");
         return image;
     }
 }

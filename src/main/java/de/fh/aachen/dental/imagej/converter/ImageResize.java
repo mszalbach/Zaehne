@@ -1,11 +1,7 @@
 package de.fh.aachen.dental.imagej.converter;
 
-import ij.IJ;
 import ij.ImagePlus;
-import ij.gui.ImageWindow;
 import ij.process.ImageProcessor;
-
-import java.io.File;
 
 /**
  * Created by marcel on 21.05.15.
@@ -36,7 +32,9 @@ public class ImageResize implements Converter {
             ip = ip.bin(factor);
         }
 
-        return new ImagePlus(image.getTitle() + " resized", ip.getBufferedImage());
+        image.setProcessor(ip);
+        image.setTitle(image.getTitle() + " Resize");
+        return image;
     }
 
     private boolean imageToLarge(ImageProcessor image) {
