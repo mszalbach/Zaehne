@@ -1,6 +1,5 @@
 package de.fh.aachen.dental.imagej.converter;
 
-import ij.IJ;
 import ij.ImagePlus;
 import ij.process.ImageConverter;
 

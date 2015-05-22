@@ -23,8 +23,6 @@ import java.util.Map;
  */
 public class Zaehne extends PlugInFrame {
 
-    private ImagePlus originalImage;
-
     private LinkedList<Converter> activeConverters = new LinkedList<Converter>();
 
     private Map<String, Converter> converterMap = new LinkedHashMap<String, Converter>();
@@ -50,7 +48,6 @@ public class Zaehne extends PlugInFrame {
             checkBoxList.add(checkBox);
             add(checkBox);
         }
-
 
         JButton convert = new JButton("Detect");
 
@@ -84,7 +81,7 @@ public class Zaehne extends PlugInFrame {
     }
 
     private void convert() {
-        originalImage = IJ.getImage();
+        ImagePlus originalImage = IJ.getImage();
         for (Converter converter : activeConverters) {
             originalImage = converter.convert(originalImage);
         }
