@@ -36,6 +36,6 @@ public class ImageResizeTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void test_resize_with_factor_one() throws InterruptedException {
-        ImagePlus resizedImage = new ImageResize(1500,1500,1).convert(image);
+        new ImageResize(1500,1500,1).convert(image);
     }
 }
