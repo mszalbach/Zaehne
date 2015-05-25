@@ -28,6 +28,7 @@ public class Zaehne extends PlugInFrame {
         availableConverterMap.put("Image Duplicator", new ImageDuplicator());
         availableConverterMap.put("Image Resize", new ImageResize(1000, 1000, 2));
         availableConverterMap.put("8-bit", new ImageTo8Bit());
+        availableConverterMap.put("FeatureJ Edge Detection", new FJEdgeDetection());
         availableConverterMap.put("Find Connected Regions",new ConnectedRegions());
         init();
     }
