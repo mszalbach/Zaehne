@@ -1,9 +1,6 @@
 package de.fh.aachen.dental;
 
-import de.fh.aachen.dental.imagej.converter.Converter;
-import de.fh.aachen.dental.imagej.converter.ImageDuplicator;
-import de.fh.aachen.dental.imagej.converter.ImageResize;
-import de.fh.aachen.dental.imagej.converter.ImageTo8Bit;
+import de.fh.aachen.dental.imagej.converter.*;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.gui.GUI;
@@ -31,6 +28,7 @@ public class Zaehne extends PlugInFrame {
         availableConverterMap.put("Image Duplicator", new ImageDuplicator());
         availableConverterMap.put("Image Resize", new ImageResize(1000, 1000, 2));
         availableConverterMap.put("8-bit", new ImageTo8Bit());
+        availableConverterMap.put("Find Connected Regions",new ConnectedRegions());
         init();
     }
 
