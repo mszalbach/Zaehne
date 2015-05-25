@@ -13,7 +13,7 @@ import static org.junit.Assert.assertThat;
 public class ImageTo8BitTest {
 
     @Test
-    public void to8Bit() throws InterruptedException {
+    public void test_to_8Bit() throws InterruptedException {
         ImagePlus image = NewImage.createRGBImage("Color Image", 1000, 1000, 1, NewImage.FILL_RANDOM);
         assertThat(image.getProcessor().isGrayscale(), is(false));
         ImagePlus grayImage = new ImageTo8Bit().convert(image);
