@@ -8,50 +8,48 @@ import ij.IJ;
 import ij.ImagePlus;
 import ij.gui.GUI;
 import ij.plugin.frame.PlugInFrame;
+import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Marcel on 16.04.2015.
  */
 public class Zaehne extends PlugInFrame {
 
-    private LinkedList<Converter> activeConverters = new LinkedList<Converter>();
+    private List<Converter> activeConverters = new LinkedList<Converter>();
 
-    private Map<String, Converter> converterMap = new LinkedHashMap<String, Converter>();
-    private List<JCheckBox> checkBoxList = new LinkedList<JCheckBox>();
+    private Map<String, Converter> availableConverterMap = new LinkedHashMap<String, Converter>();
+    private List<JCheckBox> checkBoxList = new ArrayList<JCheckBox>();
 
     public Zaehne() {
         super("Dental detection");
 
-        converterMap.put("Image Duplicator", new ImageDuplicator());
-        converterMap.put("Image Resize", new ImageResize(1000, 1000, 2));
-        converterMap.put("8-bit", new ImageTo8Bit());
+        availableConverterMap.put("Image Duplicator", new ImageDuplicator());
+        availableConverterMap.put("Image Resize", new ImageResize(1000, 1000, 2));
+        availableConverterMap.put("8-bit", new ImageTo8Bit());
         init();
     }
 
 
     public void init() {
 
-        setLayout(new FlowLayout());
+        JPanel panel = new JPanel(new MigLayout());
+        add(panel);
 
-        for (String converterName : converterMap.keySet()) {
+        for (String converterName : availableConverterMap.keySet()) {
             JCheckBox checkBox = new JCheckBox(converterName);
             checkBox.setName(converterName);
             checkBoxList.add(checkBox);
-            add(checkBox);
+            panel.add(checkBox,"wrap");
         }
 
-        JButton convert = new JButton("Detect");
+        JButton okButton = new JButton("OK");
 
-        convert.addActionListener(new ActionListener() {
+        okButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 addConverter();
@@ -59,22 +57,30 @@ public class Zaehne extends PlugInFrame {
             }
         });
 
+        JButton cancelButton = new JButton("Cancel");
 
-        add(convert);
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+           close();
+            }
+        });
+
+
+        panel.add(okButton,"tag ok");
+        panel.add(cancelButton,"tag cancel");
 
 
         pack();
         GUI.center(this);
-        setMinimumSize(new Dimension(400, 50));
         setVisible(true);
-
     }
 
     private void addConverter() {
         activeConverters.clear();
         for (JCheckBox checkBox : checkBoxList) {
             if (checkBox.isSelected()) {
-                activeConverters.add(converterMap.get(checkBox.getName()));
+                activeConverters.add(availableConverterMap.get(checkBox.getName()));
             }
 
         }
