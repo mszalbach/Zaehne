@@ -1,6 +1,6 @@
 package de.fh.aachen.dental;
 
-import de.fh.aachen.dental.imagej.converter.*;
+import de.fh.aachen.dental.gui.*;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.gui.GUI;
@@ -10,26 +10,25 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by Marcel on 16.04.2015.
  */
 public class Zaehne extends PlugInFrame {
 
-    private List<Converter> activeConverters = new LinkedList<Converter>();
-
-    private Map<String, Converter> availableConverterMap = new LinkedHashMap<String, Converter>();
-    private List<JCheckBox> checkBoxList = new ArrayList<JCheckBox>();
+    private List<IConverterComponent> converterPanels = new LinkedList<IConverterComponent>();
 
     public Zaehne() {
         super("Dental detection");
 
-        availableConverterMap.put("Image Duplicator", new ImageDuplicator());
-        availableConverterMap.put("Image Resize", new ImageResize(1000, 1000, 2));
-        availableConverterMap.put("8-bit", new ImageTo8Bit());
-        availableConverterMap.put("FeatureJ Edge Detection", new FJEdgeDetection());
-        availableConverterMap.put("Find Connected Regions",new ConnectedRegions());
+        converterPanels.add(new ImageDuplicatorComponent());
+        converterPanels.add(new ImageResizeComponent());
+        converterPanels.add(new ImageTo8BitComponent());
+        converterPanels.add(new FJEdgeDetectionComponent());
+        converterPanels.add(new ConnectedRegionsComponent());
+
         init();
     }
 
@@ -39,20 +38,26 @@ public class Zaehne extends PlugInFrame {
         JPanel panel = new JPanel(new MigLayout());
         add(panel);
 
-        for (String converterName : availableConverterMap.keySet()) {
-            JCheckBox checkBox = new JCheckBox(converterName);
-            checkBox.setName(converterName);
-            checkBoxList.add(checkBox);
-            panel.add(checkBox,"wrap");
+        for (IConverterComponent converterPanel : converterPanels) {
+            panel.add(converterPanel.getComponent(), "wrap");
         }
+
 
         JButton okButton = new JButton("OK");
 
         okButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                addConverter();
                 convert();
+            }
+        });
+
+        JButton clearButton = new JButton("Clear");
+
+        clearButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                clear();
             }
         });
 
@@ -61,13 +66,13 @@ public class Zaehne extends PlugInFrame {
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-           close();
+                close();
             }
         });
 
-
-        panel.add(okButton,"tag ok");
-        panel.add(cancelButton,"tag cancel");
+        panel.add(okButton, "tag ok");
+        panel.add(clearButton);
+        panel.add(cancelButton, "tag cancel");
 
 
         pack();
@@ -75,20 +80,19 @@ public class Zaehne extends PlugInFrame {
         setVisible(true);
     }
 
-    private void addConverter() {
-        activeConverters.clear();
-        for (JCheckBox checkBox : checkBoxList) {
-            if (checkBox.isSelected()) {
-                activeConverters.add(availableConverterMap.get(checkBox.getName()));
-            }
-
+    private void clear() {
+        for (IConverterComponent converterPanel : converterPanels) {
+            converterPanel.setActive(false);
         }
     }
 
+
     private void convert() {
         ImagePlus originalImage = IJ.getImage();
-        for (Converter converter : activeConverters) {
-            originalImage = converter.convert(originalImage);
+        for (IConverterComponent converterPanel : converterPanels) {
+            if (converterPanel.isActive()) {
+                originalImage = converterPanel.getConverter().convert(originalImage);
+            }
         }
         originalImage.show();
     }
