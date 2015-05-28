@@ -10,9 +10,9 @@ import javax.swing.*;
 public interface IConverterComponent {
     boolean isActive();
 
-    void setActive(boolean b);
-
     Converter getConverter();
 
     JComponent getComponent();
+
+    void clear();
 }

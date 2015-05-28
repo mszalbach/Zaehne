@@ -82,7 +82,7 @@ public class Zaehne extends PlugInFrame {
 
     private void clear() {
         for (IConverterComponent converterPanel : converterPanels) {
-            converterPanel.setActive(false);
+            converterPanel.clear();
         }
     }
 

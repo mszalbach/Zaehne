@@ -1,6 +1,7 @@
 package de.fh.aachen.dental.gui;
 
 import de.fh.aachen.dental.imagej.converter.Converter;
+import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 
@@ -9,13 +10,13 @@ import javax.swing.*;
  */
 public abstract class ConverterComponent implements IConverterComponent {
 
-    private JCheckBox checkBox;
-    private JPanel panel;
+    protected JCheckBox checkBox;
+    protected JPanel panel;
 
     public ConverterComponent(String name) {
         this.checkBox = new JCheckBox(name);
-        this.panel = new JPanel();
-        panel.add(checkBox);
+        this.panel = new JPanel(new MigLayout());
+        panel.add(checkBox, "wrap");
     }
 
     @Override
@@ -24,8 +25,8 @@ public abstract class ConverterComponent implements IConverterComponent {
     }
 
     @Override
-    public void setActive(boolean b) {
-        checkBox.setSelected(b);
+    public void clear() {
+        checkBox.setSelected(false);
     }
 
     @Override
