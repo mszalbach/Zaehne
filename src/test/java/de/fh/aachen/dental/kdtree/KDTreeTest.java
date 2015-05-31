@@ -24,9 +24,9 @@ public class KDTreeTest {
 
         assertThat(tree.isEmpty(), is(false));
 
-        assertThat(tree.getNearestNeighbors(new Coordinate(0, 0), 0).get(0), is(new Coordinate(0, 0)));
+        assertThat(tree.getNearestNeighbors(new Coordinate(0, 0), 0).isEmpty(), is(true));
 
-        assertThat(tree.getNearestNeighbors(new Coordinate(0, 0), 5).get(0), is(new Coordinate(0, 0)));
+        assertThat(tree.getNearestNeighbors(new Coordinate(0, 0), 5).get(0), is(new Coordinate(1, 1)));
         assertThat(tree.getNearestNeighbors(new Coordinate(4, 5), 1, 0).get(0), is(new Coordinate(5, 5)));
         assertThat(tree.getNearestNeighbors(new Coordinate(11, 11), 0).isEmpty(), is(true));
 

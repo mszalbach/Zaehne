@@ -55,7 +55,10 @@ public class KDTree {
         List<KdNode> erg = tree.query(queryEnv);
         List<Coordinate> orderedList = new ArrayList<Coordinate>();
         for (KdNode node : erg) {
-            orderedList.add(node.getCoordinate());
+            //do not add startPoint because this is not a neighbor
+            if(!startPoint.equals(node.getCoordinate())) {
+                orderedList.add(node.getCoordinate());
+            }
         }
 
         Collections.sort(orderedList, new EuclideanComparator(startPoint));
