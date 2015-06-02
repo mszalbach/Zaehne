@@ -16,6 +16,10 @@ public class ConnectRegionsTest {
     public void testConvert() throws Exception {
         ImagePlus image = NewImage.createByteImage("B/W Image", 5, 5, 1, NewImage.FILL_BLACK);
 
+        image.getProcessor().setValue(255);
+        image.getProcessor().setBackgroundValue(0);
+
+
         image.getProcessor().set(0,0,255);
         image.getProcessor().set(2,0,255);
 

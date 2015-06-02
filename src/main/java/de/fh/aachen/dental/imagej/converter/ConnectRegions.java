@@ -29,9 +29,6 @@ public class ConnectRegions implements Converter {
     @Override
     public ImagePlus convert(ImagePlus image) {
         ImageProcessor processor = image.getProcessor();
-        processor.setValue(WHITE);
-        processor.setBackgroundValue(BLACK);
-
 
         List<Coordinate> pointList = new ArrayList<Coordinate>();
         KDTree tree = new KDTree();
@@ -40,7 +37,7 @@ public class ConnectRegions implements Converter {
             for (int y = 0; y < image.getHeight(); y++) {
                 int[][] neighborhood = new int[3][3];
 
-                if (processor.getPixel(x, y) == WHITE) {
+                if (processor.getPixel(x, y) != processor.getBackgroundValue()) {
                     //neighborhood method did not work as expected
                     neighborhood[0][0] = processor.getPixel(x - 1, y - 1);
                     neighborhood[1][0] = processor.getPixel(x, y - 1);
