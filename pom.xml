@@ -8,7 +8,6 @@
         <groupId>sc.fiji</groupId>
         <artifactId>pom-fiji</artifactId>
         <version>11.0.0</version>
-        <relativePath />
     </parent>
 
     <groupId>de.fh-aachen</groupId>
@@ -38,15 +37,6 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
                     <skip>true</skip>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.3</version>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
                 </configuration>
             </plugin>
             <plugin>
