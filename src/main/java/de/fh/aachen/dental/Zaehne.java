@@ -18,83 +18,80 @@ import java.util.List;
  */
 public class Zaehne extends PlugInFrame {
 
-    private List<IConverterComponent> converterPanels = new LinkedList<IConverterComponent>();
+	private List<IConverterComponent> converterPanels = new LinkedList<IConverterComponent>();
 
-    public Zaehne() {
-        super("Dental detection");
+	public Zaehne() {
+		super("Dental detection");
 
-        converterPanels.add(new ImageDuplicatorComponent());
-        converterPanels.add(new ImageResizeComponent());
-        converterPanels.add(new ImageTo8BitComponent());
-        converterPanels.add(new FJEdgeDetectionComponent());
-        converterPanels.add(new ConnectedRegionsComponent());
-        converterPanels.add(new ConnectRegionsComponent());
+		converterPanels.add(new ImageDuplicatorComponent());
+		converterPanels.add(new ImageResizeComponent());
+		converterPanels.add(new ImageTo8BitComponent());
+		converterPanels.add(new ReflectionFilterComponent());
+		converterPanels.add(new FJEdgeDetectionComponent());
+		converterPanels.add(new ConnectedRegionsComponent());
+		converterPanels.add(new ConnectRegionsComponent());
 
-        init();
-    }
+		init();
+	}
 
+	public void init() {
 
-    public void init() {
+		JPanel panel = new JPanel(new MigLayout());
+		add(panel);
 
-        JPanel panel = new JPanel(new MigLayout());
-        add(panel);
+		for (IConverterComponent converterPanel : converterPanels) {
+			panel.add(converterPanel.getComponent(), "wrap");
+		}
 
-        for (IConverterComponent converterPanel : converterPanels) {
-            panel.add(converterPanel.getComponent(), "wrap");
-        }
+		JButton okButton = new JButton("OK");
 
+		okButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				convert();
+			}
+		});
 
-        JButton okButton = new JButton("OK");
+		JButton clearButton = new JButton("Clear");
 
-        okButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                convert();
-            }
-        });
+		clearButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				clear();
+			}
+		});
 
-        JButton clearButton = new JButton("Clear");
+		JButton cancelButton = new JButton("Cancel");
 
-        clearButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                clear();
-            }
-        });
+		cancelButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				close();
+			}
+		});
 
-        JButton cancelButton = new JButton("Cancel");
+		panel.add(okButton, "tag ok");
+		panel.add(clearButton);
+		panel.add(cancelButton, "tag cancel");
 
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                close();
-            }
-        });
+		pack();
+		GUI.center(this);
+		setVisible(true);
+	}
 
-        panel.add(okButton, "tag ok");
-        panel.add(clearButton);
-        panel.add(cancelButton, "tag cancel");
+	private void clear() {
+		for (IConverterComponent converterPanel : converterPanels) {
+			converterPanel.clear();
+		}
+	}
 
-
-        pack();
-        GUI.center(this);
-        setVisible(true);
-    }
-
-    private void clear() {
-        for (IConverterComponent converterPanel : converterPanels) {
-            converterPanel.clear();
-        }
-    }
-
-
-    private void convert() {
-        ImagePlus originalImage = IJ.getImage();
-        for (IConverterComponent converterPanel : converterPanels) {
-            if (converterPanel.isActive()) {
-                originalImage = converterPanel.getConverter().convert(originalImage);
-            }
-        }
-        originalImage.show();
-    }
+	private void convert() {
+		ImagePlus originalImage = IJ.getImage();
+		for (IConverterComponent converterPanel : converterPanels) {
+			if (converterPanel.isActive()) {
+				originalImage = converterPanel.getConverter().convert(originalImage);
+			}
+		}
+		originalImage.show();
+	}
 }
