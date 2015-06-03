@@ -19,6 +19,23 @@ public abstract class ConverterComponent implements IConverterComponent {
         panel.add(checkBox, "wrap");
     }
 
+    protected JTextField generateTextField(String name) {
+        JTextField textField = new JTextField();
+        textField.setColumns(5);
+        JLabel label = new JLabel(name);
+        label.setLabelFor(textField);
+
+        panel.add(label);
+        panel.add(textField);
+
+        return textField;
+    }
+
+    protected void addIndent() {
+        panel.add(new JSeparator(),"gap 100px");
+    }
+
+
     @Override
     public boolean isActive() {
         return checkBox.isSelected();
