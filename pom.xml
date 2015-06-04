@@ -34,6 +34,14 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${scijava.jvm.version}</source>
+                    <target>${scijava.jvm.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
                     <skip>true</skip>
@@ -80,6 +88,16 @@
         <dependency>
             <groupId>sc.fiji</groupId>
             <artifactId>imagescience</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>sc.fiji</groupId>
+            <artifactId>Skeletonize3D_</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>sc.fiji</groupId>
+            <artifactId>AnalyzeSkeleton_</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>

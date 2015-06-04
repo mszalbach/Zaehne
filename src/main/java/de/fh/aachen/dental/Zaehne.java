@@ -28,9 +28,9 @@ public class Zaehne extends PlugInFrame {
         converterPanels.add(new ReflectionFilterComponent());
 		converterPanels.add(new ImageTo8BitComponent());
         converterPanels.add(new ImageEdgeComponent());
+        converterPanels.add(new ImageSkeletonizeComponent());
+        converterPanels.add(new FindEndpointsComponent());
 		converterPanels.add(new ConnectedRegionsComponent());
-		converterPanels.add(new ConnectRegionsComponent());
-
 		init();
 	}
 
