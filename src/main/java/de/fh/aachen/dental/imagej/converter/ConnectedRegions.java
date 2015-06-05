@@ -3,13 +3,17 @@ package de.fh.aachen.dental.imagej.converter;
 import ij.ImagePlus;
 import util.FindConnectedRegions;
 
+import java.util.Collections;
+import java.util.LinkedList;
+
 /**
  * Created by foobar on 25.05.15.
  */
 public class ConnectedRegions implements Converter {
 
-    protected FindConnectedRegions.Results results;
     protected boolean keepOnlyLargestRegion = false;
+
+    private LinkedList<RegionInfo> regionInfoList = new LinkedList<RegionInfo>();
 
     public ConnectedRegions() {
 
@@ -23,7 +27,7 @@ public class ConnectedRegions implements Converter {
     @Override
     public ImagePlus convert(ImagePlus image) {
         FindConnectedRegions fcr = new util.FindConnectedRegions();
-        results = fcr.run(image,
+        FindConnectedRegions.Results results = fcr.run(image,
                 true,
                 true,
                 true,
@@ -36,21 +40,53 @@ public class ConnectedRegions implements Converter {
                 -1,
                 true);
 
+        for (int i = 0; i < results.regionInfo.size(); i++) {
+            FindConnectedRegions.Region region = results.regionInfo.get(i);
+            ImagePlus regionImage = results.perRegion.get(i);
+            regionInfoList.add(new RegionInfo(regionImage, region));
+
+        }
+
         if (keepOnlyLargestRegion) {
-            FindConnectedRegions.Region maxRegion = results.regionInfo.get(0);
-            int maxRegionIndex = 0;
-            for (int i = 1; i < results.regionInfo.size(); i++) {
-                FindConnectedRegions.Region region = results.regionInfo.get(i);
-                if (region.compareTo(maxRegion) > 0) {
-                    maxRegion = region;
-                    maxRegionIndex = i;
-                }
-            }
-            ImagePlus largestRegion = results.perRegion.get(maxRegionIndex);
+            Collections.sort(regionInfoList);
+            ImagePlus largestRegion = regionInfoList.getLast().getImage();
             largestRegion.setTitle(image.getTitle());
             return largestRegion;
         }
 
         return results.allRegions;
+    }
+
+    public LinkedList<RegionInfo> getRegionInfoList() {
+        return regionInfoList;
+    }
+
+    public static class RegionInfo implements Comparable<RegionInfo> {
+
+        private ImagePlus image;
+        private FindConnectedRegions.Region region;
+
+        public RegionInfo(ImagePlus image, FindConnectedRegions.Region region) {
+            this.image = image;
+            this.region = region;
+        }
+
+        public FindConnectedRegions.Region getRegion() {
+            return region;
+        }
+
+        public ImagePlus getImage() {
+            return image;
+        }
+
+        public int getNumberOfPoints() {
+            return region.getNumberOfPoints();
+        }
+
+        @Override
+        public int compareTo(RegionInfo o) {
+            return region.compareTo(o.region);
+        }
+
     }
 }

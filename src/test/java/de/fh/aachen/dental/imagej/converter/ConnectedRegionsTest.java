@@ -31,12 +31,12 @@ public class ConnectedRegionsTest {
 
         connectedRegions.convert(image);
 
-        assertThat(connectedRegions.results.regionInfo.size(), is(2));
-        assertThat(connectedRegions.results.regionInfo.get(0).getNumberOfPoints(), is(4));
-        assertThat(connectedRegions.results.regionInfo.get(1).getNumberOfPoints(), is(3));
+        assertThat(connectedRegions.getRegionInfoList().size(), is(2));
+        assertThat(connectedRegions.getRegionInfoList().get(0).getNumberOfPoints(), is(4));
+        assertThat(connectedRegions.getRegionInfoList().get(1).getNumberOfPoints(), is(3));
 
-        ImagePlus region1 = connectedRegions.results.perRegion.get(0);
-        ImagePlus region2 = connectedRegions.results.perRegion.get(1);
+        ImagePlus region1 = connectedRegions.getRegionInfoList().get(0).getImage();
+        ImagePlus region2 = connectedRegions.getRegionInfoList().get(1).getImage();
 
         assertThat(region1.getProcessor().get(3,0), is(255));
         assertThat(region2.getProcessor().get(2,2), is(255));
