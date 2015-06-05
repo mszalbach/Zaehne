@@ -4,19 +4,21 @@ import de.fh.aachen.dental.imagej.converter.Converter;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by foobar on 25.05.15.
  */
 public abstract class AbstractConverterComponent implements IConverterComponent {
 
-    protected JCheckBox checkBox;
+    protected JCheckBox activationCheckBox;
     protected JPanel panel;
 
     public AbstractConverterComponent(String name) {
-        this.checkBox = new JCheckBox(name);
+        this.activationCheckBox = new JCheckBox(name);
         this.panel = new JPanel(new MigLayout());
-        panel.add(checkBox, "wrap");
+        panel.add(activationCheckBox, "wrap");
     }
 
     protected JTextField addTextField(String name) {
@@ -32,11 +34,19 @@ public abstract class AbstractConverterComponent implements IConverterComponent 
     }
 
     protected void addIndent() {
-        panel.add(new JSeparator(),"gap 100px");
+        panel.add(new JSeparator(), "gap 100px");
     }
 
     protected JCheckBox addCheckbox(String name) {
-        JCheckBox checkBox = new JCheckBox(name);
+        final JCheckBox checkBox = new JCheckBox(name);
+        checkBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (checkBox.isSelected()) {
+                    activationCheckBox.setSelected(true);
+                }
+            }
+        });
         panel.add(checkBox);
         return checkBox;
     }
@@ -44,13 +54,13 @@ public abstract class AbstractConverterComponent implements IConverterComponent 
 
     @Override
     public boolean isActive() {
-        return checkBox.isSelected();
+        return activationCheckBox.isSelected();
     }
 
 
     @Override
     public void clear() {
-        checkBox.setSelected(false);
+        activationCheckBox.setSelected(false);
     }
 
     @Override
