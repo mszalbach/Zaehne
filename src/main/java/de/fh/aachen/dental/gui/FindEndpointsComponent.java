@@ -8,7 +8,7 @@ import javax.swing.*;
 /**
  * Created by foobar on 04.06.15.
  */
-public class FindEndpointsComponent extends ConverterComponent {
+public class FindEndpointsComponent extends AbstractConverterComponent {
 
     private JCheckBox shouldConnectCheckbox;
 
@@ -17,8 +17,7 @@ public class FindEndpointsComponent extends ConverterComponent {
 
         addIndent();
 
-        shouldConnectCheckbox = new JCheckBox("Should connect Endpoints");
-        panel.add(shouldConnectCheckbox);
+        shouldConnectCheckbox = addCheckbox("Should connect Endpoints");
         setDefaults();
     }
 

@@ -8,7 +8,7 @@ import javax.swing.*;
 /**
  * Created by foobar on 25.05.15.
  */
-public class ImageEdgeComponent extends ConverterComponent {
+public class ImageEdgeComponent extends AbstractConverterComponent {
 
 
     private JTextField radiusTextField;
@@ -20,10 +20,10 @@ public class ImageEdgeComponent extends ConverterComponent {
         super("Image Edge Detection");
 
         addIndent();
-        radiusTextField = generateTextField("Radius");
-        alphaTextField = generateTextField("Alpha");
-        lowerTextField = generateTextField("Lower");
-        upperTextField = generateTextField("Higher");
+        radiusTextField = addTextField("Radius");
+        alphaTextField = addTextField("Alpha");
+        lowerTextField = addTextField("Lower");
+        upperTextField = addTextField("Higher");
 
         setDefaults();
 

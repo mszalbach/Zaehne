@@ -6,7 +6,7 @@ import de.fh.aachen.dental.imagej.converter.ImageResize;
 /**
  * Created by foobar on 25.05.15.
  */
-public class ImageResizeComponent extends ConverterComponent {
+public class ImageResizeComponent extends AbstractConverterComponent {
 
     public ImageResizeComponent() {
         super("Image Resize");

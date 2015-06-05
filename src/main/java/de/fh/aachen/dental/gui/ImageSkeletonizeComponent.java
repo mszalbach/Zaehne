@@ -6,7 +6,7 @@ import de.fh.aachen.dental.imagej.converter.ImageSkeletonize;
 /**
  * Created by foobar on 25.05.15.
  */
-public class ImageSkeletonizeComponent extends ConverterComponent {
+public class ImageSkeletonizeComponent extends AbstractConverterComponent {
 
     public ImageSkeletonizeComponent() {
         super("Skeletonize");

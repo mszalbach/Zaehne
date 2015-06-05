@@ -42,4 +42,19 @@ public class ConnectedRegionsTest {
         assertThat(region2.getProcessor().get(2,2), is(255));
 
     }
+
+    @Test
+    public void testKeepOnlyGreatestRegion() throws Exception {
+        image.getProcessor().drawLine(0, 0, 3, 0);
+        image.getProcessor().drawLine(0, 2, 2, 2);
+
+        connectedRegions.keepOnlyLargestRegion = true;
+
+        ImagePlus largestRegion = connectedRegions.convert(image);
+
+
+        assertThat(largestRegion.getProcessor().get(3,0), is(255));
+        assertThat(largestRegion.getProcessor().get(2,2), is(0));
+
+    }
 }

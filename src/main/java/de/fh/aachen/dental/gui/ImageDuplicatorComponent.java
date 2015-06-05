@@ -6,7 +6,7 @@ import de.fh.aachen.dental.imagej.converter.ImageDuplicator;
 /**
  * Created by foobar on 25.05.15.
  */
-public class ImageDuplicatorComponent extends ConverterComponent {
+public class ImageDuplicatorComponent extends AbstractConverterComponent {
 
     public ImageDuplicatorComponent() {
         super("Image Duplicator");
