@@ -18,6 +18,6 @@ public class ImageTo8BitTest {
         assertThat(image.getProcessor().isGrayscale(), is(false));
         ImagePlus grayImage = new ImageTo8Bit().convert(image);
 
-        assertThat(grayImage.getProcessor().isGrayscale(),is(true) );
+        assertThat(grayImage.getProcessor().isGrayscale(), is(true));
     }
 }

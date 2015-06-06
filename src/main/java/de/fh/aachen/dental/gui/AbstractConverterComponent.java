@@ -51,6 +51,12 @@ public abstract class AbstractConverterComponent implements IConverterComponent 
         return checkBox;
     }
 
+    protected <T> JComboBox<JComboBoxEntry<T>> addComboBox(JComboBoxEntry<T>[] entries) {
+        JComboBox<JComboBoxEntry<T>> comboBox = new JComboBox<JComboBoxEntry<T>>(entries);
+        panel.add(comboBox);
+        return comboBox;
+    }
+
 
     @Override
     public boolean isActive() {
@@ -69,6 +75,30 @@ public abstract class AbstractConverterComponent implements IConverterComponent 
     @Override
     public JComponent getComponent() {
         return panel;
+    }
+
+
+    public static class JComboBoxEntry<T> {
+        private String name;
+        private T object;
+
+        public JComboBoxEntry(String name, T object) {
+            this.name = name;
+            this.object = object;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public T getObject() {
+            return object;
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
     }
 
 

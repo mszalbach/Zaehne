@@ -1,7 +1,10 @@
 package de.fh.aachen.dental.gui;
 
-import de.fh.aachen.dental.imagej.converter.FindEndpoints;
 import de.fh.aachen.dental.imagej.converter.Converter;
+import de.fh.aachen.dental.imagej.converter.FindEndpoints;
+import de.fh.aachen.dental.imagej.converter.endpointConnection.ConnectToNearestEndpoint;
+import de.fh.aachen.dental.imagej.converter.endpointConnection.DoNotConnectEndpoint;
+import de.fh.aachen.dental.imagej.converter.endpointConnection.EndpointConnectionStrategy;
 
 import javax.swing.*;
 
@@ -10,14 +13,19 @@ import javax.swing.*;
  */
 public class FindEndpointsComponent extends AbstractConverterComponent {
 
-    private JCheckBox shouldConnectCheckbox;
+    private JComboBox<JComboBoxEntry> strategyComboBox;
 
     public FindEndpointsComponent() {
         super("Find Endpoints");
 
         addIndent();
 
-        shouldConnectCheckbox = addCheckbox("Should connect Endpoints");
+        JComboBoxEntry[] jComboBoxEntries = {
+                new JComboBoxEntry<EndpointConnectionStrategy>("Do not Connect Endpoints.", new DoNotConnectEndpoint()),
+                new JComboBoxEntry<EndpointConnectionStrategy>("Connect to nearest Endpoint.", new ConnectToNearestEndpoint()),
+        };
+        strategyComboBox = addComboBox(jComboBoxEntries);
+
         setDefaults();
     }
 
@@ -29,11 +37,13 @@ public class FindEndpointsComponent extends AbstractConverterComponent {
     }
 
     private void setDefaults() {
-        shouldConnectCheckbox.setSelected(false);
+        strategyComboBox.setSelectedIndex(0);
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public Converter getConverter() {
-        return new FindEndpoints(shouldConnectCheckbox.isSelected());
+        JComboBoxEntry<EndpointConnectionStrategy> strategy = (JComboBoxEntry<EndpointConnectionStrategy>) strategyComboBox.getSelectedItem();
+        return new FindEndpoints(strategy.getObject());
     }
 }

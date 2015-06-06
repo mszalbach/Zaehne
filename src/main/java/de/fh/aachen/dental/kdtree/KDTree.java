@@ -49,6 +49,7 @@ public class KDTree {
     }
 
 
+    @SuppressWarnings("unchecked")
     public List<Coordinate> getNearestNeighbors(Coordinate startPoint, double deltaX, double deltaY) {
         Envelope queryEnv = new Envelope(startPoint);
         queryEnv.expandBy(deltaX, deltaY);

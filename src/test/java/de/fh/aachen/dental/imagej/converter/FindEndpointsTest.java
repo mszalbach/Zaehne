@@ -1,5 +1,7 @@
 package de.fh.aachen.dental.imagej.converter;
 
+import de.fh.aachen.dental.imagej.converter.endpointConnection.ConnectToNearestEndpoint;
+import de.fh.aachen.dental.imagej.converter.endpointConnection.DoNotConnectEndpoint;
 import ij.ImagePlus;
 import ij.gui.NewImage;
 import org.junit.Before;
@@ -22,7 +24,7 @@ public class FindEndpointsTest {
         image = NewImage.createByteImage("B/W Image", 10, 10, 1, NewImage.FILL_BLACK);
         image.getProcessor().setValue(255);
         image.getProcessor().setBackgroundValue(0);
-        findEndpoints = new FindEndpoints(false);
+        findEndpoints = new FindEndpoints(new DoNotConnectEndpoint());
     }
 
     @Test
@@ -62,7 +64,7 @@ public class FindEndpointsTest {
     public void testConnectEndpoints() {
         image.getProcessor().drawPixel(0, 0);
         image.getProcessor().drawPixel(2, 0);
-        findEndpoints.shouldConnectEndpoints = true;
+        findEndpoints.setConnectionStrategy(new ConnectToNearestEndpoint());
 
         assertThat(image.getProcessor().get(1,0), is(0));
 
