@@ -68,45 +68,6 @@ public class ReflectionFilter implements Converter {
 	}
 
 	/**
-	 * Generates a binary image. All reflections are white, the others are black
-	 * pixels.
-	 * 
-	 * @return binary image-representation of reflections
-	 */
-	public ImagePlus getBinaryImageWithReflections() {
-		ImagePlus image = this.originalImage.duplicate();
-
-		ImageProcessor ip = image.getProcessor();
-
-		int[] rgb = new int[3];
-		for (int y = 0; y < ip.getHeight(); y++) {
-			for (int x = 0; x < ip.getWidth(); x++) {
-
-				ip.getPixel(x, y, rgb);
-
-				if (isReflection(rgb)) {
-					rgb[0] = 255;
-					rgb[1] = 255;
-					rgb[2] = 255;
-				} else {
-					rgb[0] = 0;
-					rgb[1] = 0;
-					rgb[2] = 0;
-				}
-
-				ip.putPixel(x, y, rgb);
-			}
-		}
-
-		ip = ip.convertToByte(false);
-		BinaryProcessor bp = new BinaryProcessor(new ByteProcessor(ip.createImage()));
-		bp.autoThreshold();
-		ImagePlus binaryImage = new ImagePlus("Binary Image with reflections", bp);
-
-		return binaryImage;
-	}
-
-	/**
 	 * Creates a new image in which are only the reflections. All other pixel
 	 * are black.
 	 * 
@@ -157,7 +118,7 @@ public class ReflectionFilter implements Converter {
 		int rgbSum[] = new int[3];
 
 		// when current pixel is a reflection
-		if (isReflection(rgb)) {
+		if (ReflectionFilter.isReflection(rgb)) {
 
 			// local adaption
 			for (int y_local = y - 5; y_local < (y - 5) + STEPHEIGHT; y_local++) {
@@ -169,7 +130,7 @@ public class ReflectionFilter implements Converter {
 					// ignore pixel which are out of bounds
 					if (!pixelIsOutOfBounds(tmpArray)) {
 
-						if (!isReflection(rgbAdapted)) {
+						if (!ReflectionFilter.isReflection(rgbAdapted)) {
 
 							// summarize rgb values
 							for (int i = 0; i < 3; i++) {
@@ -218,18 +179,15 @@ public class ReflectionFilter implements Converter {
 	 *            - rgb-values
 	 * @return true, if this rgb-values represents a reflection, otherwise false
 	 */
-	boolean isReflection(int[] rgb) {
-		boolean oneGreaterEqualsThanUpperBound = rgb[0] >= UPPERBOUND_OF_REFLECTION
-				|| rgb[1] >= UPPERBOUND_OF_REFLECTION || rgb[2] >= UPPERBOUND_OF_REFLECTION;
+	static boolean isReflection(int[] rgb) {
 
-		return (oneGreaterEqualsThanUpperBound);
+		return (rgb[0] >= UPPERBOUND_OF_REFLECTION || rgb[1] >= UPPERBOUND_OF_REFLECTION
+				|| rgb[2] >= UPPERBOUND_OF_REFLECTION);
 	}
 
 	@Override
 	public ImagePlus convert(ImagePlus image) {
 		this.originalImage = image;
-
-		// getBinaryImageWithReflections().show();
 
 		return removeReflections();
 	}
