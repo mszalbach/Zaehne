@@ -1,0 +1,35 @@
+package de.fh.aachen.dental.imagej;
+
+import ij.ImagePlus;
+
+/**
+ * Created by marcel on 10.06.15.
+ */
+public class ImageJUtils {
+
+    private ImageJUtils() {}
+
+    public static void getNeighborhood(ImagePlus image, int x, int y, int[][] neighborhood) {
+
+        int height = image.getHeight();
+        int width = image.getWidth();
+
+        assert(neighborhood.length %2 == 1);
+        assert(neighborhood[0].length %2 == 1);
+
+        int regionLength = neighborhood.length;
+        int regionAdd = (regionLength-1)/2;
+
+        for( int xi = -regionAdd; xi <= regionAdd; xi++) {
+            for(int yi= -regionAdd; yi <=regionAdd;yi++) {
+                int xh = x+xi;
+                int yh = y+yi;
+
+                if(xh >= 0 && xh<width && yh >=0 && yh <height) {
+                    neighborhood[xi+regionAdd][yi+regionAdd] = image.getProcessor().getPixel(xh,yh);
+                }
+            }
+        }
+
+    }
+}

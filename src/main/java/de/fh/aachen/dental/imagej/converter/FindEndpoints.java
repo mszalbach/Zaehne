@@ -25,7 +25,7 @@ public class FindEndpoints implements Converter {
 
         analyse.setup("", image);
 
-        result = analyse.run(AnalyzeSkeleton_.SHORTEST_BRANCH, false, true, image, true,
+        result = analyse.run(AnalyzeSkeleton_.NONE, false, true, image, true,
                 false, null);
 
         connectionStrategy.connectEndpoints(image, result);
