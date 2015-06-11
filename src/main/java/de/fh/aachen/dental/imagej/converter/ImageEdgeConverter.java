@@ -9,27 +9,24 @@ import ij.process.ImageProcessor;
  */
 public class ImageEdgeConverter implements Converter {
 
-    private final double radius;
-    private final float alpha;
-    private final float upper;
-    private final float lower;
+	private final double radius;
+	private final float alpha;
+	private final float upper;
+	private final float lower;
 
-    public ImageEdgeConverter(double radius,
-                              float alpha,
-                              float upper,
-                              float lower) {
+	public ImageEdgeConverter(double radius, float alpha, float upper, float lower) {
 
-        this.radius = radius;
-        this.alpha = alpha;
-        this.upper = upper;
-        this.lower = lower;
-    }
+		this.radius = radius;
+		this.alpha = alpha;
+		this.upper = upper;
+		this.lower = lower;
+	}
 
-
-    @Override
-    public ImagePlus convert(ImagePlus image) {
-        ImageProcessor tmp1 = ImageEdge.areaEdge(image.getProcessor(), radius, alpha, upper, lower);
-        image.setProcessor(tmp1);
-        return image;
-    }
+	@Override
+	public ImagePlus convert(ImagePlus image) {
+		ImagePlus dup = image.duplicate();
+		ImageProcessor tmp1 = ImageEdge.areaEdge(dup.getProcessor(), radius, alpha, upper, lower);
+		dup.setProcessor(tmp1);
+		return dup;
+	}
 }
