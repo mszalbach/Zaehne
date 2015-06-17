@@ -1,7 +1,7 @@
 package de.fh.aachen.dental.gui;
 
-import de.fh.aachen.dental.imagej.converter.Converter;
-import de.fh.aachen.dental.imagej.converter.ImageEdgeConverter;
+import de.fh.aachen.dental.imagej.processor.ImageEdgeProcessor;
+import de.fh.aachen.dental.imagej.processor.Preprocessor;
 
 import javax.swing.*;
 
@@ -37,13 +37,13 @@ public class ImageEdgeComponent extends AbstractConverterComponent {
 
 
     @Override
-    public Converter getConverter() {
+    public Preprocessor getPreprocessor() {
         double radius = new Double(radiusTextField.getText());
         float alpha = new Float(alphaTextField.getText());
         float upper = new Float(upperTextField.getText());
         float lower = new Float(lowerTextField.getText());
 
-        return new ImageEdgeConverter(radius,alpha,upper,lower);
+        return new ImageEdgeProcessor(radius,alpha,upper,lower);
     }
 
     private void setDefaults() {

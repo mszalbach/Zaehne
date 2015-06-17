@@ -1,6 +1,6 @@
 package de.fh.aachen.dental.gui;
 
-import de.fh.aachen.dental.imagej.converter.Converter;
+import de.fh.aachen.dental.imagej.processor.Preprocessor;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 /**
  * Created by foobar on 25.05.15.
  */
-public abstract class AbstractConverterComponent implements IConverterComponent {
+public abstract class AbstractConverterComponent implements PreprocessorComponent {
 
     protected JCheckBox activationCheckBox;
     protected JPanel panel;
@@ -70,7 +70,7 @@ public abstract class AbstractConverterComponent implements IConverterComponent 
     }
 
     @Override
-    public abstract Converter getConverter();
+    public abstract Preprocessor getPreprocessor();
 
     @Override
     public JComponent getComponent() {

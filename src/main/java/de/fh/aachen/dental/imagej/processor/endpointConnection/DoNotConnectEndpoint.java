@@ -1,4 +1,4 @@
-package de.fh.aachen.dental.imagej.converter.endpointConnection;
+package de.fh.aachen.dental.imagej.processor.endpointConnection;
 
 import ij.ImagePlus;
 import ij.gui.PointRoi;

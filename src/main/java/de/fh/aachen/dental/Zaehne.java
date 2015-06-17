@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class Zaehne extends PlugInFrame {
 
-	private List<IConverterComponent> converterPanels = new LinkedList<IConverterComponent>();
+	private List<PreprocessorComponent> converterPanels = new LinkedList<PreprocessorComponent>();
 
 	public Zaehne() {
 		super("Dental detection");
@@ -40,7 +40,7 @@ public class Zaehne extends PlugInFrame {
 		JPanel panel = new JPanel(new MigLayout());
 		add(panel);
 
-		for (IConverterComponent converterPanel : converterPanels) {
+		for (PreprocessorComponent converterPanel : converterPanels) {
 			panel.add(converterPanel.getComponent(), "wrap");
 		}
 
@@ -81,16 +81,16 @@ public class Zaehne extends PlugInFrame {
 	}
 
 	private void clear() {
-		for (IConverterComponent converterPanel : converterPanels) {
+		for (PreprocessorComponent converterPanel : converterPanels) {
 			converterPanel.clear();
 		}
 	}
 
 	private void convert() {
 		ImagePlus originalImage = IJ.getImage();
-		for (IConverterComponent converterPanel : converterPanels) {
+		for (PreprocessorComponent converterPanel : converterPanels) {
 			if (converterPanel.isActive()) {
-				originalImage = converterPanel.getConverter().convert(originalImage);
+				originalImage = converterPanel.getPreprocessor().process(originalImage);
 			}
 		}
 		originalImage.show();

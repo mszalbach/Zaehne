@@ -1,10 +1,10 @@
 package de.fh.aachen.dental.gui;
 
-import de.fh.aachen.dental.imagej.converter.Converter;
-import de.fh.aachen.dental.imagej.converter.FindEndpoints;
-import de.fh.aachen.dental.imagej.converter.endpointConnection.ConnectToNearestEndpoint;
-import de.fh.aachen.dental.imagej.converter.endpointConnection.DoNotConnectEndpoint;
-import de.fh.aachen.dental.imagej.converter.endpointConnection.EndpointConnectionStrategy;
+import de.fh.aachen.dental.imagej.processor.FindEndpoints;
+import de.fh.aachen.dental.imagej.processor.Preprocessor;
+import de.fh.aachen.dental.imagej.processor.endpointConnection.ConnectToNearestEndpoint;
+import de.fh.aachen.dental.imagej.processor.endpointConnection.DoNotConnectEndpoint;
+import de.fh.aachen.dental.imagej.processor.endpointConnection.EndpointConnectionStrategy;
 
 import javax.swing.*;
 
@@ -42,7 +42,7 @@ public class FindEndpointsComponent extends AbstractConverterComponent {
 
     @Override
     @SuppressWarnings("unchecked")
-    public Converter getConverter() {
+    public Preprocessor getPreprocessor() {
         JComboBoxEntry<EndpointConnectionStrategy> strategy = (JComboBoxEntry<EndpointConnectionStrategy>) strategyComboBox.getSelectedItem();
         return new FindEndpoints(strategy.getObject());
     }

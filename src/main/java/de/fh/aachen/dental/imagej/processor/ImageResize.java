@@ -1,4 +1,4 @@
-package de.fh.aachen.dental.imagej.converter;
+package de.fh.aachen.dental.imagej.processor;
 
 import ij.ImagePlus;
 import ij.process.ImageProcessor;
@@ -6,7 +6,7 @@ import ij.process.ImageProcessor;
 /**
  * Created by marcel on 21.05.15.
  */
-public class ImageResize implements Converter {
+public class ImageResize implements Preprocessor {
 
     private final int maxHeight;
     private final int maxWidth;
@@ -23,7 +23,7 @@ public class ImageResize implements Converter {
     }
 
     @Override
-    public ImagePlus convert(ImagePlus image) {
+    public ImagePlus process(ImagePlus image) {
 
         ImageProcessor ip = image.getProcessor();
         ip.setInterpolationMethod(ImageProcessor.BILINEAR);

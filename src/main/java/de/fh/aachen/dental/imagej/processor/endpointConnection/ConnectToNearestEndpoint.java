@@ -1,4 +1,4 @@
-package de.fh.aachen.dental.imagej.converter.endpointConnection;
+package de.fh.aachen.dental.imagej.processor.endpointConnection;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import de.fh.aachen.dental.kdtree.KDTree;

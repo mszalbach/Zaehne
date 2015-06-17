@@ -1,7 +1,7 @@
 package de.fh.aachen.dental.gui;
 
-import de.fh.aachen.dental.imagej.converter.ConnectedRegions;
-import de.fh.aachen.dental.imagej.converter.Converter;
+import de.fh.aachen.dental.imagej.processor.ConnectedRegions;
+import de.fh.aachen.dental.imagej.processor.Preprocessor;
 
 import javax.swing.*;
 
@@ -33,7 +33,7 @@ public class ConnectedRegionsComponent extends AbstractConverterComponent {
     }
 
     @Override
-    public Converter getConverter() {
+    public Preprocessor getPreprocessor() {
         return new ConnectedRegions(keepOnlyLargestRegionCheckbox.isSelected());
     }
 }

@@ -1,7 +1,7 @@
 package de.fh.aachen.dental.gui;
 
-import de.fh.aachen.dental.imagej.converter.Converter;
-import de.fh.aachen.dental.imagej.filter.ReflectionFilter;
+import de.fh.aachen.dental.imagej.processor.Preprocessor;
+import de.fh.aachen.dental.imagej.processor.ReflectionFilter;
 
 public class ReflectionFilterComponent extends AbstractConverterComponent {
 
@@ -10,7 +10,7 @@ public class ReflectionFilterComponent extends AbstractConverterComponent {
 	}
 
 	@Override
-	public Converter getConverter() {
+	public Preprocessor getPreprocessor() {
 		return new ReflectionFilter();
 	}
 

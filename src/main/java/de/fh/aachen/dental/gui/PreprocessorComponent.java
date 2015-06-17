@@ -1,16 +1,16 @@
 package de.fh.aachen.dental.gui;
 
-import de.fh.aachen.dental.imagej.converter.Converter;
+import de.fh.aachen.dental.imagej.processor.Preprocessor;
 
 import javax.swing.*;
 
 /**
  * Created by foobar on 25.05.15.
  */
-public interface IConverterComponent {
+public interface PreprocessorComponent {
     boolean isActive();
 
-    Converter getConverter();
+    Preprocessor getPreprocessor();
 
     JComponent getComponent();
 

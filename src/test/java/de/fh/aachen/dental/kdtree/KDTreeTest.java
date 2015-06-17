@@ -31,4 +31,5 @@ public class KDTreeTest {
         assertThat(tree.getNearestNeighbors(new Coordinate(11, 11), 0).isEmpty(), is(true));
 
     }
+
 }

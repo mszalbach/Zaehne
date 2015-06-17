@@ -1,4 +1,4 @@
-package de.fh.aachen.dental.imagej.converter;
+package de.fh.aachen.dental.imagej.processor;
 
 import ij.ImagePlus;
 import ij.gui.NewImage;
@@ -22,20 +22,20 @@ public class ImageResizeTest {
 
     @Test
     public void test_resize() throws InterruptedException {
-        ImagePlus resizedImage = new ImageResize(500,500,2).convert(image);
+        ImagePlus resizedImage = new ImageResize(500,500,2).process(image);
         assertThat(resizedImage.getWidth(),is(500) );
         assertThat(resizedImage.getHeight(),is(500) );
     }
 
     @Test
     public void test_no_resize() throws InterruptedException {
-        ImagePlus resizedImage = new ImageResize(1500,1500,2).convert(image);
+        ImagePlus resizedImage = new ImageResize(1500,1500,2).process(image);
         assertThat(resizedImage.getWidth(),is(1000) );
         assertThat(resizedImage.getHeight(),is(1000) );
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void test_resize_with_factor_one() throws InterruptedException {
-        new ImageResize(1500,1500,1).convert(image);
+        new ImageResize(1500,1500,1).process(image);
     }
 }

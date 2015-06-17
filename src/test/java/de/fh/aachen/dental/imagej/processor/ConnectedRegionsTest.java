@@ -1,4 +1,4 @@
-package de.fh.aachen.dental.imagej.converter;
+package de.fh.aachen.dental.imagej.processor;
 
 import ij.ImagePlus;
 import ij.gui.NewImage;
@@ -29,7 +29,7 @@ public class ConnectedRegionsTest {
         image.getProcessor().drawLine(0, 0, 3, 0);
         image.getProcessor().drawLine(0, 2, 2, 2);
 
-        connectedRegions.convert(image);
+        connectedRegions.process(image);
 
         assertThat(connectedRegions.getRegionInfoList().size(), is(2));
         assertThat(connectedRegions.getRegionInfoList().get(0).getNumberOfPoints(), is(4));
@@ -50,7 +50,7 @@ public class ConnectedRegionsTest {
 
         connectedRegions.keepOnlyLargestRegion = true;
 
-        ImagePlus largestRegion = connectedRegions.convert(image);
+        ImagePlus largestRegion = connectedRegions.process(image);
 
 
         assertThat(largestRegion.getProcessor().get(3,0), is(255));

@@ -1,4 +1,4 @@
-package de.fh.aachen.dental.imagej.converter;
+package de.fh.aachen.dental.imagej.processor;
 
 import ij.ImagePlus;
 import util.FindConnectedRegions;
@@ -9,7 +9,7 @@ import java.util.LinkedList;
 /**
  * Created by foobar on 25.05.15.
  */
-public class ConnectedRegions implements Converter {
+public class ConnectedRegions implements Preprocessor {
 
     protected boolean keepOnlyLargestRegion = false;
 
@@ -25,7 +25,7 @@ public class ConnectedRegions implements Converter {
     }
 
     @Override
-    public ImagePlus convert(ImagePlus image) {
+    public ImagePlus process(ImagePlus image) {
         FindConnectedRegions fcr = new util.FindConnectedRegions();
         FindConnectedRegions.Results results = fcr.run(image,
                 true,

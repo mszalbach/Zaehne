@@ -1,4 +1,4 @@
-package de.fh.aachen.dental.imagej.converter;
+package de.fh.aachen.dental.imagej.processor;
 
 import ij.IJ;
 import ij.ImagePlus;
@@ -12,7 +12,7 @@ import imagescience.utility.Progressor;
 /**
  * Created by foobar on 25.05.15.
  */
-public class FJEdgeDetection implements Converter {
+public class FJEdgeDetection implements Preprocessor {
 
     private final boolean compute;
     private final String scale;
@@ -37,7 +37,7 @@ public class FJEdgeDetection implements Converter {
 
 
     @Override
-    public ImagePlus convert(ImagePlus image) {
+    public ImagePlus process(ImagePlus image) {
         return run(image, compute, scale, suppress, lower, higher);
     }
 

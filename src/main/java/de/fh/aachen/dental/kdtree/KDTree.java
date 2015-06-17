@@ -66,7 +66,7 @@ public class KDTree {
         return orderedList;
     }
 
-    private static class EuclideanComparator implements Comparator<Coordinate> {
+    public static class EuclideanComparator implements Comparator<Coordinate> {
 
         private Coordinate startCoordinate;
 

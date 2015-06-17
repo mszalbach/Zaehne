@@ -1,7 +1,7 @@
-package de.fh.aachen.dental.imagej.converter;
+package de.fh.aachen.dental.imagej.processor;
 
-import de.fh.aachen.dental.imagej.converter.endpointConnection.ConnectToNearestEndpoint;
-import de.fh.aachen.dental.imagej.converter.endpointConnection.DoNotConnectEndpoint;
+import de.fh.aachen.dental.imagej.processor.endpointConnection.ConnectToNearestEndpoint;
+import de.fh.aachen.dental.imagej.processor.endpointConnection.DoNotConnectEndpoint;
 import ij.ImagePlus;
 import ij.gui.NewImage;
 import org.junit.Before;
@@ -32,7 +32,7 @@ public class FindEndpointsTest {
         image.getProcessor().drawLine(0, 0, 3, 0);
 
 
-        findEndpoints.convert(image);
+        findEndpoints.process(image);
 
         assertThat(findEndpoints.result.getNumOfTrees(), is(1));
         assertThat("tree 0 has two endpoints", findEndpoints.result.getEndPoints()[0], is(2));
@@ -48,7 +48,7 @@ public class FindEndpointsTest {
         image.getProcessor().drawLine(0, 0, 3, 0);
         image.getProcessor().drawLine(0, 2, 3, 2);
 
-        findEndpoints.convert(image);
+        findEndpoints.process(image);
 
         assertThat(findEndpoints.result.getNumOfTrees(), is(2));
 
@@ -68,7 +68,7 @@ public class FindEndpointsTest {
 
         assertThat(image.getProcessor().get(1,0), is(0));
 
-        findEndpoints.convert(image);
+        findEndpoints.process(image);
 
         assertThat(image.getProcessor().get(1,0), is(255));
     }
