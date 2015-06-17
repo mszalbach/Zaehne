@@ -64,37 +64,6 @@ public class ReflectionFilter implements Preprocessor {
 		return clonedImage;
 	}
 
-	/**
-	 * Creates a new image in which are only the reflections. All other pixel
-	 * are black.
-	 * 
-	 * @return image with reflection
-	 */
-	@Deprecated
-	public ImagePlus getReflectionImage() {
-		ImagePlus reflectionImage = originalImage.duplicate();
-
-		ImageProcessor ip = reflectionImage.getProcessor();
-
-		int[] rgb = new int[3];
-		for (int y = 0; y < ip.getHeight(); y++) {
-			for (int x = 0; x < ip.getWidth(); x++) {
-
-				ip.getPixel(x, y, rgb);
-
-				// only keep reflections
-				if (!isReflection(rgb)) {
-					rgb[0] = 0;
-					rgb[1] = 0;
-					rgb[2] = 0;
-				}
-
-				ip.putPixel(x, y, rgb);
-			}
-		}
-
-		return reflectionImage;
-	}
 
 	/**
 	 * 
