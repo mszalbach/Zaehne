@@ -32,4 +32,20 @@ public class KDTreeTest {
 
     }
 
+    @Test
+    public void testFindInDirection() throws Exception {
+        KDTree tree = new KDTree();
+
+        tree.insert(new Coordinate(0, 1));
+        tree.insert(new Coordinate(0, 3));
+        tree.insert(new Coordinate(3, 3));
+
+        assertThat(tree.isEmpty(), is(false));
+
+        assertThat(tree.getNearestNeighbors(new Coordinate(0, 0), 0).isEmpty(), is(true));
+        assertThat(tree.getNearestNeighbors(new Coordinate(0, 3), 5,0).get(0), is(new Coordinate(3, 3)));
+
+
+    }
+
 }
